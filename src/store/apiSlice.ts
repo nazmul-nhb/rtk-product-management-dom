@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
-import { IProductResponse, IPQueryResponse } from "../types/interfaces";
+import {
+	IPMutationResponse,
+	IProductResponse,
+	IPQueryResponse,
+	IProductToCreate,
+} from "../types/interfaces";
 
 const baseUrl = "https://rtk-product-management-server.vercel.app/";
 
@@ -22,6 +27,15 @@ export const productsApi = createApi({
 		getProduct: builder.query<IProductResponse, string>({
 			query: (id) => `products/${id}`,
 			providesTags: ["Product"],
+		}),
+		// create a new product
+		createProduct: builder.mutation<IPMutationResponse, IProductToCreate>({
+			query: (newProduct) => ({
+				url,
+				method: "POST",
+				body: newProduct,
+			}),
+			invalidatesTags: ["ProductList"],
 		}),
 	}),
 });
