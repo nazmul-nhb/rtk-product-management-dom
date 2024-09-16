@@ -4,6 +4,7 @@ import {
 	IProductResponse,
 	IPQueryResponse,
 	IProductToCreate,
+	IProductToUpdate,
 } from "../types/interfaces";
 
 const baseUrl = "https://rtk-product-management-server.vercel.app/";
@@ -36,6 +37,15 @@ export const productsApi = createApi({
 				body: newProduct,
 			}),
 			invalidatesTags: ["ProductList"],
+		}),
+		// update a product by id
+		updateProduct: builder.mutation<IPMutationResponse, IProductToUpdate>({
+			query: ({ id, updatedProduct }) => ({
+				url: `${url}/${id}`,
+				method: "PATCH",
+				body: updatedProduct,
+			}),
+			invalidatesTags: ["ProductList", "Product"],
 		}),
 	}),
 });

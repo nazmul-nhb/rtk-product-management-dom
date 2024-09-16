@@ -1,6 +1,6 @@
 import { productsApi } from "../store/apiSlice";
 import { productStore } from "../store/productStore";
-import { IProductToCreate } from "../types/interfaces";
+import { IProductToCreate, IProductToUpdate } from "../types/interfaces";
 
 // get all products
 export const getAllProducts = async () => {
@@ -32,7 +32,19 @@ export const createProduct = async (product: IProductToCreate) => {
 		const result = await productStore.dispatch(
 			productsApi.endpoints.createProduct.initiate(product)
 		);
-		console.log(result);
+		console.log(result.data);
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+// update a product by id
+export const updateProductById = async (product: IProductToUpdate) => {
+	try {
+		const result = await productStore.dispatch(
+			productsApi.endpoints.updateProduct.initiate(product)
+		);
+		console.log(result.data);
 	} catch (error) {
 		console.error(error);
 	}
