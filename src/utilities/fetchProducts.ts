@@ -8,7 +8,12 @@ export const getAllProducts = async () => {
 		const result = await productStore.dispatch(
 			productsApi.endpoints.getAllProducts.initiate()
 		);
-		console.log(result.data?.products);
+	
+        if (result.data) {
+			return result.data;
+		} else if (result.error) {
+			console.error(result.error);
+		}
 	} catch (error) {
 		console.error(error);
 	}
@@ -39,7 +44,7 @@ export const createProduct = async (product: IProductToCreate) => {
 		);
 
 		if (result.data) {
-			console.log(result.data);
+			return result.data;
 		} else if (result.error) {
 			console.error(result.error);
 		}
