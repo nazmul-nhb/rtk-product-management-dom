@@ -1,42 +1,22 @@
 import "./style.css";
 import { IPQueryResponse } from "./types/interfaces";
 // import { IProductToCreate } from "./types/interfaces";
-import {
-	// createProduct,
-	// deleteProductById,
-	getAllProducts,
-	getProductById,
-	// updateProductById,
-} from "./utilities/fetchProducts";
+import { getAllProducts } from "./utilities/fetchProducts";
+import { handleDeleteProduct } from "./utilities/handlers";
 
-// const updatedProduct = {
-// 	price: 77,
-// };
+export const showProducts = async () => {
+	const { products } = ((await getAllProducts()) as IPQueryResponse) || {};
 
-// const newProduct: IProductToCreate = {
-// 	title: "Abul",
-// 	price: 99,
-// 	productImage: "babul.com",
-// };
+	if (products) {
+		const productsGrid = document.getElementById("products");
+		if (productsGrid) {
+			productsGrid.innerHTML = "";
+			products.forEach((product) => {
+				const { _id, title, productImage, productId, price } = product;
+				const productCard = document.createElement("div");
 
-getProductById("66e86aa7bad83af3545f0615");
-
-// createProduct(newProduct);
-
-// updateProductById({ id: "66e1add143a224576183c2bb", updatedProduct });
-
-// deleteProductById("66e1add143a224576183c2bb");
-
-const showProducts = async () => {
-	const { products } = (await getAllProducts()) as IPQueryResponse;
-
-	const productsGrid = document.getElementById("products");
-
-	products.forEach((product) => {
-		const { title, productImage, productId, price } = product;
-		const productCard = document.createElement("div");
-
-		productCard.innerHTML = `
+				productCard.innerHTML = `
+    <div class="flex flex-col items-center justify-center gap-1 border px-3 py-2">
       <div title="${title}" class="space-y-2">
        <figure class="relative border p-1 aspect-square">
         <img src="${productImage}" alt="${title}" />
@@ -51,9 +31,31 @@ const showProducts = async () => {
           ${price}
         </span>
       </figure>
+      </div>
+       <div class="w-full flex items-center flex-wrap justify-around gap-3 mt-2">
+     
+      <button
+        id="delete-btn-${_id}"
+        class="border border-red-800 text-red-800 hover:bg-red-800 hover:text-white transition-all duration-500 font-semibold px-3 py-1"
+      >
+        Delete
+      </button>
+     
+    </div>
+   
     </div>`;
-		productsGrid?.appendChild(productCard);
-	});
+				productsGrid?.appendChild(productCard);
+				const deleteButton = document.getElementById(
+					`delete-btn-${_id}`
+				);
+				if (deleteButton) {
+					deleteButton.addEventListener("click", () =>
+						handleDeleteProduct(_id)
+					);
+				}
+			});
+		}
+	}
 };
 
 showProducts();

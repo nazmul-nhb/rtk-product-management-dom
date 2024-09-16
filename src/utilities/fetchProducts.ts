@@ -10,6 +10,7 @@ export const getAllProducts = async () => {
 		);
 	
         if (result.data) {
+            console.log(result.data);
 			return result.data;
 		} else if (result.error) {
 			console.error(result.error);
@@ -27,7 +28,7 @@ export const getProductById = async (id: string) => {
 		);
 
 		if (result.data) {
-			console.log(result.data?.product);
+			console.log(result.data);
 		} else if (result.error) {
 			console.error(result.error);
 		}
