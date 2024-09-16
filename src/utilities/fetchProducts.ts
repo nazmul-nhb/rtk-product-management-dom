@@ -1,3 +1,4 @@
+import { showProducts } from "../main";
 import { productsApi } from "../store/apiSlice";
 import { productStore } from "../store/productStore";
 import { IProductToCreate, IProductToUpdate } from "../types/interfaces";
@@ -8,9 +9,9 @@ export const getAllProducts = async () => {
 		const result = await productStore.dispatch(
 			productsApi.endpoints.getAllProducts.initiate()
 		);
-	
-        if (result.data) {
-            console.log(result.data);
+
+		if (result.data?.success) {
+			console.log(result.data);
 			return result.data;
 		} else if (result.error) {
 			console.error(result.error);
@@ -27,8 +28,9 @@ export const getProductById = async (id: string) => {
 			productsApi.endpoints.getProduct.initiate(id)
 		);
 
-		if (result.data) {
+		if (result.data?.success) {
 			console.log(result.data);
+			return result.data?.product;
 		} else if (result.error) {
 			console.error(result.error);
 		}
@@ -44,8 +46,9 @@ export const createProduct = async (product: IProductToCreate) => {
 			productsApi.endpoints.createProduct.initiate(product)
 		);
 
-		if (result.data) {
-			return result.data;
+		if (result.data?.success) {
+			console.log(result.data);
+			await showProducts();
 		} else if (result.error) {
 			console.error(result.error);
 		}
@@ -61,8 +64,9 @@ export const updateProductById = async (product: IProductToUpdate) => {
 			productsApi.endpoints.updateProduct.initiate(product)
 		);
 
-		if (result.data) {
+		if (result.data?.success) {
 			console.log(result.data);
+			await showProducts();
 		} else if (result.error) {
 			console.error(result.error);
 		}
@@ -77,8 +81,10 @@ export const deleteProductById = async (id: string) => {
 		const result = await productStore.dispatch(
 			productsApi.endpoints.deleteProduct.initiate(id)
 		);
-		if (result.data) {
+
+		if (result.data?.success) {
 			console.log(result.data);
+			await showProducts();
 		} else if (result.error) {
 			console.error(result.error);
 		}
