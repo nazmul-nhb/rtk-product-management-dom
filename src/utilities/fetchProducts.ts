@@ -1,4 +1,4 @@
-import { showAllProducts } from "../main";
+import { displayAllProducts } from "../main";
 import { productsApi } from "../store/apiSlice";
 import { productStore } from "../store/productStore";
 import { IProductToCreate, IProductToUpdate } from "../types/interfaces";
@@ -48,7 +48,7 @@ export const createProduct = async (product: IProductToCreate) => {
 
 		if (result.data?.success) {
 			console.log(result.data);
-			await showAllProducts();
+			await displayAllProducts();
 		} else if (result.error) {
 			console.error(result.error);
 		}
@@ -66,7 +66,7 @@ export const updateProductById = async (product: IProductToUpdate) => {
 
 		if (result.data?.success) {
 			console.log(result.data);
-			await showAllProducts();
+			await displayAllProducts();
 		} else if (result.error) {
 			console.error(result.error);
 		}
@@ -84,7 +84,7 @@ export const deleteProductById = async (id: string) => {
 
 		if (result.data?.success) {
 			console.log(result.data);
-			await showAllProducts();
+			await displayAllProducts();
 		} else if (result.error) {
 			console.error(result.error);
 		}
