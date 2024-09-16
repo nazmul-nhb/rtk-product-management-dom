@@ -36,4 +36,3 @@ export interface IProductToUpdate {
 	id: string;
 	updatedProduct: Partial<IProduct>;
 }
-

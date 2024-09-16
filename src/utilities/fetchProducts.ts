@@ -20,7 +20,12 @@ export const getProductById = async (id: string) => {
 		const result = await productStore.dispatch(
 			productsApi.endpoints.getProduct.initiate(id)
 		);
-		console.log(result.data?.product);
+
+		if (result.data) {
+			console.log(result.data?.product);
+		} else if (result.error) {
+			console.error(result.error);
+		}
 	} catch (error) {
 		console.error(error);
 	}
@@ -32,7 +37,12 @@ export const createProduct = async (product: IProductToCreate) => {
 		const result = await productStore.dispatch(
 			productsApi.endpoints.createProduct.initiate(product)
 		);
-		console.log(result.data);
+
+		if (result.data) {
+			console.log(result.data);
+		} else if (result.error) {
+			console.error(result.error);
+		}
 	} catch (error) {
 		console.error(error);
 	}
@@ -44,7 +54,12 @@ export const updateProductById = async (product: IProductToUpdate) => {
 		const result = await productStore.dispatch(
 			productsApi.endpoints.updateProduct.initiate(product)
 		);
-		console.log(result.data);
+
+		if (result.data) {
+			console.log(result.data);
+		} else if (result.error) {
+			console.error(result.error);
+		}
 	} catch (error) {
 		console.error(error);
 	}
@@ -56,7 +71,11 @@ export const deleteProductById = async (id: string) => {
 		const result = await productStore.dispatch(
 			productsApi.endpoints.deleteProduct.initiate(id)
 		);
-		console.log(result.data);
+		if (result.data) {
+			console.log(result.data);
+		} else if (result.error) {
+			console.error(result.error);
+		}
 	} catch (error) {
 		console.error(error);
 	}
