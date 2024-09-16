@@ -3,8 +3,16 @@ import { IPQueryResponse } from "./types/interfaces";
 // import { IProductToCreate } from "./types/interfaces";
 import { deleteProductById, getAllProducts } from "./utilities/fetchProducts";
 
-export const showProducts = async () => {
-	const { products } = ((await getAllProducts()) as IPQueryResponse) || {};
+export const showAllProducts = async () => {
+	const { products, totalProducts } =
+		((await getAllProducts()) as IPQueryResponse) || {};
+
+	const navTotal = document.getElementById("total-products");
+
+	const productCount = document.createElement("sup");
+	productCount.innerText = `${totalProducts || 0}`;
+
+	navTotal?.appendChild(productCount);
 
 	if (products) {
 		const productsGrid = document.getElementById("products");
@@ -56,4 +64,4 @@ export const showProducts = async () => {
 	}
 };
 
-showProducts();
+await showAllProducts();
