@@ -49,3 +49,15 @@ export const updateProductById = async (product: IProductToUpdate) => {
 		console.error(error);
 	}
 };
+
+// delete a product by id
+export const deleteProductById = async (id: string) => {
+	try {
+		const result = await productStore.dispatch(
+			productsApi.endpoints.deleteProduct.initiate(id)
+		);
+		console.log(result.data);
+	} catch (error) {
+		console.error(error);
+	}
+};

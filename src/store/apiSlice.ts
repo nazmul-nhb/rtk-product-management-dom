@@ -47,5 +47,13 @@ export const productsApi = createApi({
 			}),
 			invalidatesTags: ["ProductList", "Product"],
 		}),
+		// delete a product by id
+		deleteProduct: builder.mutation<IPMutationResponse, string>({
+			query: (id) => ({
+				url: `${url}/${id}`,
+				method: "DELETE",
+			}),
+			invalidatesTags: ["ProductList"],
+		}),
 	}),
 });
