@@ -2,6 +2,8 @@ import { displayAllProducts } from "../main";
 import { productsApi } from "../store/apiSlice";
 import { productStore } from "../store/productStore";
 import { IProductToCreate, IProductToUpdate } from "../types/interfaces";
+import toastr from "toastr";
+import "toastr/build/toastr.min.css";
 
 const { dispatch } = productStore;
 
@@ -85,9 +87,10 @@ export const deleteProductById = async (id: string) => {
 		const result = await dispatch(deleteProduct.initiate(id));
 
 		if (result.data?.success) {
-			console.log(result.data);
+			toastr.success(result.data?.message);
 		} else if (result.error) {
-			console.error(result.error);
+            console.error(result.error);
+            toastr.error("Could Not Delete!")
 		}
 	} catch (error) {
 		console.error(error);
