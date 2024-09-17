@@ -87,10 +87,12 @@ export const deleteProductById = async (id: string) => {
 		const result = await dispatch(deleteProduct.initiate(id));
 
 		if (result.data?.success) {
-			toastr.success(result.data?.message);
+			toastr.success(result.data?.message, "", {
+				positionClass: "toast-top-center",
+			});
 		} else if (result.error) {
-            console.error(result.error);
-            toastr.error("Could Not Delete!")
+			console.error(result.error);
+			toastr.error("Could Not Delete!");
 		}
 	} catch (error) {
 		console.error(error);
