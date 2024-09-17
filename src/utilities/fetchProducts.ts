@@ -23,7 +23,6 @@ export const getProducts = async () => {
 		);
 
 		if (result.data?.success) {
-			console.log(result.data);
 			return result.data;
 		} else if (result.error) {
 			console.error(result.error);
@@ -39,7 +38,6 @@ export const getProductById = async (id: string) => {
 		const result = await dispatch(getProduct.initiate(id));
 
 		if (result.data?.success) {
-			console.log(result.data);
 			return result.data?.product;
 		} else if (result.error) {
 			console.error(result.error);
@@ -55,7 +53,6 @@ export const createNewProduct = async (product: IProductToCreate) => {
 		const result = await dispatch(createProduct.initiate(product));
 
 		if (result.data?.success) {
-			console.log(result.data);
 			await displayAllProducts();
 		} else if (result.error) {
 			console.error(result.error);
@@ -71,7 +68,6 @@ export const updateProductById = async (product: IProductToUpdate) => {
 		const result = await dispatch(updateProduct.initiate(product));
 
 		if (result.data?.success) {
-			console.log(result.data);
 			await displayAllProducts();
 		} else if (result.error) {
 			console.error(result.error);
