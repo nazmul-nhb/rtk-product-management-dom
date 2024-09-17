@@ -1,6 +1,17 @@
 import "./style.css";
 import { IPQueryResponse } from "./types/interfaces";
 import { deleteProductById, getProducts } from "./utilities/fetchProducts";
+import {
+	handleLocation,
+	handleRoutes,
+	setupLinkListeners,
+} from "./utilities/routeHandlers";
+
+declare global {
+	interface Window {
+		route: (event: MouseEvent) => void;
+	}
+}
 
 export const displayAllProducts = async () => {
 	try {
@@ -85,9 +96,14 @@ export const displayAllProducts = async () => {
 };
 
 (async () => {
+	setupLinkListeners();
+	handleLocation();
 	try {
 		await displayAllProducts();
 	} catch (error) {
 		console.error(error);
 	}
 })();
+
+window.onpopstate = handleLocation;
+window.route = handleRoutes;
