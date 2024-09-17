@@ -7,14 +7,19 @@ export const displayAllProducts = async () => {
 		const { products, totalProducts } =
 			((await getAllProducts()) as IPQueryResponse) || {};
 
-		const navTotal = document.getElementById("total-products");
-
-		const productCount = document.createElement("sup");
-		productCount.innerText = `${totalProducts || 0}`;
-
-		navTotal?.appendChild(productCount);
-
 		if (products) {
+			const navTotal = document.getElementById("total-products");
+
+			let productCount = navTotal?.querySelector("sup");
+
+			if (!productCount) {
+				productCount = document.createElement("sup");
+				navTotal?.appendChild(productCount);
+			}
+
+			// Update the product count with the correct total
+			productCount.innerText = `${totalProducts || 0}`;
+
 			const productsGrid = document.getElementById("products");
 
 			if (productsGrid) {
