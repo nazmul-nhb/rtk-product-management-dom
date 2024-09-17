@@ -1,3 +1,5 @@
+import { displayLoading } from "../main";
+
 export const handleRoutes = (event: MouseEvent) => {
 	event.preventDefault();
 	const target = event.target as HTMLAnchorElement | null;
@@ -41,6 +43,7 @@ export const handleLocation = async () => {
 	}
 
 	try {
+		displayLoading(true);
 		const response = await fetch(route);
 		const html = await response.text();
 
@@ -53,6 +56,8 @@ export const handleLocation = async () => {
 		}
 	} catch (error) {
 		console.error("Failed to Load Route: ", error);
+	} finally {
+		displayLoading(false);
 	}
 };
 
