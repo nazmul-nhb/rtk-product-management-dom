@@ -3,11 +3,21 @@ import { productsApi } from "../store/apiSlice";
 import { productStore } from "../store/productStore";
 import { IProductToCreate, IProductToUpdate } from "../types/interfaces";
 
+const { dispatch } = productStore;
+
+const {
+	getAllProducts,
+	getProduct,
+	createProduct,
+	updateProduct,
+	deleteProduct,
+} = productsApi.endpoints;
+
 // get all products
-export const getAllProducts = async () => {
+export const getProducts = async () => {
 	try {
-		const result = await productStore.dispatch(
-			productsApi.endpoints.getAllProducts.initiate()
+		const result = await dispatch(
+			getAllProducts.initiate(undefined, { forceRefetch: true })
 		);
 
 		if (result.data?.success) {
@@ -24,9 +34,7 @@ export const getAllProducts = async () => {
 // get single product by id
 export const getProductById = async (id: string) => {
 	try {
-		const result = await productStore.dispatch(
-			productsApi.endpoints.getProduct.initiate(id)
-		);
+		const result = await dispatch(getProduct.initiate(id));
 
 		if (result.data?.success) {
 			console.log(result.data);
@@ -40,11 +48,9 @@ export const getProductById = async (id: string) => {
 };
 
 // create a new product
-export const createProduct = async (product: IProductToCreate) => {
+export const createNewProduct = async (product: IProductToCreate) => {
 	try {
-		const result = await productStore.dispatch(
-			productsApi.endpoints.createProduct.initiate(product)
-		);
+		const result = await dispatch(createProduct.initiate(product));
 
 		if (result.data?.success) {
 			console.log(result.data);
@@ -60,9 +66,7 @@ export const createProduct = async (product: IProductToCreate) => {
 // update a product by id
 export const updateProductById = async (product: IProductToUpdate) => {
 	try {
-		const result = await productStore.dispatch(
-			productsApi.endpoints.updateProduct.initiate(product)
-		);
+		const result = await dispatch(updateProduct.initiate(product));
 
 		if (result.data?.success) {
 			console.log(result.data);
@@ -78,13 +82,10 @@ export const updateProductById = async (product: IProductToUpdate) => {
 // delete a product by id
 export const deleteProductById = async (id: string) => {
 	try {
-		const result = await productStore.dispatch(
-			productsApi.endpoints.deleteProduct.initiate(id)
-		);
+		const result = await dispatch(deleteProduct.initiate(id));
 
 		if (result.data?.success) {
 			console.log(result.data);
-			await displayAllProducts();
 		} else if (result.error) {
 			console.error(result.error);
 		}

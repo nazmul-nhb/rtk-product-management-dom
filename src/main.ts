@@ -1,11 +1,11 @@
 import "./style.css";
 import { IPQueryResponse } from "./types/interfaces";
-import { deleteProductById, getAllProducts } from "./utilities/fetchProducts";
+import { deleteProductById, getProducts } from "./utilities/fetchProducts";
 
 export const displayAllProducts = async () => {
 	try {
 		const { products, totalProducts } =
-			((await getAllProducts()) as IPQueryResponse) || {};
+			((await getProducts()) as IPQueryResponse) || {};
 
 		if (products) {
 			const navTotal = document.getElementById("total-products");
@@ -61,15 +61,19 @@ export const displayAllProducts = async () => {
 
 					fragment.appendChild(productCard);
 
-					productsGrid?.appendChild(productCard);
-
-					const deleteButton = document.getElementById(
-						`delete-btn-${_id}`
+					// Attach the event listener for the delete button
+					const deleteButton = productCard.querySelector(
+						`#delete-btn-${_id}`
 					);
 
-					deleteButton?.addEventListener("click", async () => {
-						await deleteProductById(_id);
-					});
+					if (deleteButton) {
+						const handleDelete = async () => {
+							await deleteProductById(_id);
+							await displayAllProducts();
+						};
+
+						deleteButton.addEventListener("click", handleDelete);
+					}
 				});
 
 				productsGrid.appendChild(fragment);

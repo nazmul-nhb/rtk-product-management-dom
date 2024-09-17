@@ -19,17 +19,17 @@ const url = "products";
 export const productsApi = createApi({
 	reducerPath: "productsApi",
 	baseQuery,
-	tagTypes: ["ProductList", "Product"],
+	// tagTypes: ["ProductList", "Product"],
 	endpoints: (builder) => ({
 		// get all products
 		getAllProducts: builder.query<IPQueryResponse, void>({
 			query: () => url,
-			providesTags: ["ProductList"],
+			// providesTags: ["ProductList"],
 		}),
 		// get a single product by id
 		getProduct: builder.query<IProductResponse, string>({
 			query: (id) => `products/${id}`,
-			providesTags: ["Product"],
+			// providesTags: ["Product"],
 		}),
 		// create a new product
 		createProduct: builder.mutation<IPCreationResponse, IProductToCreate>({
@@ -38,7 +38,7 @@ export const productsApi = createApi({
 				method: "POST",
 				body: newProduct,
 			}),
-			invalidatesTags: ["ProductList"],
+			// invalidatesTags: ["ProductList"],
 		}),
 		// update a product by id
 		updateProduct: builder.mutation<IPUpdateResponse, IProductToUpdate>({
@@ -47,7 +47,7 @@ export const productsApi = createApi({
 				method: "PATCH",
 				body: updatedProduct,
 			}),
-			invalidatesTags: ["ProductList", "Product"],
+			// invalidatesTags: ["ProductList", "Product"],
 		}),
 		// delete a product by id
 		deleteProduct: builder.mutation<IPDeleteResponse, string>({
@@ -55,7 +55,7 @@ export const productsApi = createApi({
 				url: `${url}/${id}`,
 				method: "DELETE",
 			}),
-			invalidatesTags: ["ProductList"],
+			// invalidatesTags: ["ProductList"],
 		}),
 	}),
 });
