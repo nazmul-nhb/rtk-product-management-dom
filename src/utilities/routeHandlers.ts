@@ -71,6 +71,9 @@ export const setupLinkListeners = () => {
 		console.warn("Link Not Found!");
 	}
 	links.forEach((link) => {
+		link.removeEventListener("click", (event) =>
+			handleRoutes(event as MouseEvent)
+		);
 		link.addEventListener("click", (event) =>
 			handleRoutes(event as MouseEvent)
 		);
