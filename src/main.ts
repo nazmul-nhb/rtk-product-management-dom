@@ -64,9 +64,9 @@ export const displayAllProducts = async () => {
 
 					deleteButton?.addEventListener("click", async () => {
 						await deleteProductById(_id);
-						await displayAllProducts();
 					});
 				});
+
 				productsGrid.appendChild(fragment);
 			}
 		}
@@ -75,4 +75,10 @@ export const displayAllProducts = async () => {
 	}
 };
 
-await displayAllProducts();
+(async () => {
+	try {
+		await displayAllProducts();
+	} catch (error) {
+		console.error(error);
+	}
+})();
