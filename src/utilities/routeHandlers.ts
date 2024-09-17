@@ -21,6 +21,13 @@ const routes: { [key: string]: string } = {
 	404: "/404.html",
 };
 
+const pageTitles: { [key: string]: string } = {
+	"/": "Home - RTK Product Management",
+	"/cart": "Cart - RTK Product Management",
+	"/about": "About Us - RTK Product Management",
+	404: "Page Not Found - RTK Product Management",
+};
+
 export const handleLocation = async () => {
 	const path = window.location.pathname;
 
@@ -29,7 +36,7 @@ export const handleLocation = async () => {
 	let main = document.getElementById("main");
 
 	if (!main) {
-        console.error("Main Element Not Found!");
+		console.error("Main Element Not Found!");
 		return;
 	}
 
@@ -41,6 +48,8 @@ export const handleLocation = async () => {
 			main.innerHTML = html;
 
 			setupLinkListeners();
+
+			document.title = pageTitles[path] || pageTitles[404];
 		}
 	} catch (error) {
 		console.error("Failed to Load Route: ", error);
