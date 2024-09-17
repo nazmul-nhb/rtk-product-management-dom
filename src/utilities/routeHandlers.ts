@@ -1,4 +1,4 @@
-import { displayLoading } from "../main";
+import { displayAllProducts, displayLoading } from "../main";
 
 export const handleRoutes = (event: MouseEvent) => {
 	event.preventDefault();
@@ -53,6 +53,10 @@ export const handleLocation = async () => {
 			setupLinkListeners();
 
 			document.title = pageTitles[path] || pageTitles[404];
+
+			if (path === "/") {
+				await displayAllProducts();
+			}
 		}
 	} catch (error) {
 		console.error("Failed to Load Route: ", error);
