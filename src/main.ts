@@ -16,19 +16,26 @@ declare global {
 export const displayLoading = (isLoading: boolean) => {
 	const loadingIndicator = document.getElementById("loading");
 	if (loadingIndicator) {
-		loadingIndicator.className = isLoading ? "flex" : "hidden";
+		loadingIndicator.className = isLoading
+			? "w-full flex items-center justify-center min-h-[80vh]"
+			: "hidden";
 	}
 };
 
 export const displayAllProducts = async () => {
 	try {
+		// Display the loading spinner immediately
 		displayLoading(true);
+
+		// Fetch products data
 		const { products, totalProducts } =
 			((await getProducts()) as IPQueryResponse) || {};
 
+		const productsGrid = document.getElementById("products");
+
+		// If products are fetched
 		if (products) {
 			const navTotal = document.getElementById("total-products");
-
 			let productCount = navTotal?.querySelector("sup");
 
 			if (!productCount) {
@@ -39,8 +46,7 @@ export const displayAllProducts = async () => {
 			// Update the product count with the correct total
 			productCount.innerText = `${totalProducts || 0}`;
 
-			const productsGrid = document.getElementById("products");
-
+			// Display products
 			if (productsGrid) {
 				productsGrid.innerHTML = "";
 
@@ -101,13 +107,18 @@ export const displayAllProducts = async () => {
 	} catch (error) {
 		console.error(error);
 	} finally {
-		displayLoading(false);
+		// Keep the loading spinner visible for at least 5 seconds
+		setTimeout(() => {
+			displayLoading(false);
+		}, 5000);
 	}
 };
 
+// Initialize the application
 (async () => {
 	setupLinkListeners();
 	handleLocation();
+
 	try {
 		await displayAllProducts();
 	} catch (error) {
