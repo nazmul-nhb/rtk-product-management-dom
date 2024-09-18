@@ -2,6 +2,22 @@ import { displayAllProducts, displayLoading } from "../main";
 
 const links = document.querySelectorAll(".route-link");
 
+const routes: { [key: string]: string } = {
+	"/": "/home.html",
+	"/cart": "/cart.html",
+	"/about": "/about.html",
+	404: "/404.html",
+};
+
+const siteTitle = "RTK Product Management";
+
+const pageTitles: { [key: string]: string } = {
+	"/": "Home",
+	"/cart": "Cart",
+	"/about": "About Us",
+	404: "Page Not Found",
+};
+
 export const handleRoutes = (event: MouseEvent) => {
 	event.preventDefault();
 	const target = event.target as HTMLAnchorElement | null;
@@ -23,20 +39,6 @@ export const handleRoutes = (event: MouseEvent) => {
 	} else {
 		console.error("Target Not Found!");
 	}
-};
-
-const routes: { [key: string]: string } = {
-	"/": "/home.html",
-	"/cart": "/cart.html",
-	"/about": "/about.html",
-	404: "/404.html",
-};
-
-const pageTitles: { [key: string]: string } = {
-	"/": "Home - RTK Product Management",
-	"/cart": "Cart - RTK Product Management",
-	"/about": "About Us - RTK Product Management",
-	404: "Page Not Found - RTK Product Management",
 };
 
 export const handleLocation = async () => {
@@ -61,7 +63,9 @@ export const handleLocation = async () => {
 
 			setupLinkListeners();
 
-			document.title = pageTitles[path] || pageTitles[404];
+			document.title =
+				`${pageTitles[path]} - ${siteTitle}` ||
+				`${pageTitles[404]} - ${siteTitle}`;
 
 			if (path === "/") {
 				await displayAllProducts();
