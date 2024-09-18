@@ -1,5 +1,7 @@
 import { displayAllProducts, displayLoading } from "../main";
 
+const links = document.querySelectorAll(".route-link");
+
 export const handleRoutes = (event: MouseEvent) => {
 	event.preventDefault();
 	const target = event.target as HTMLAnchorElement | null;
@@ -10,6 +12,13 @@ export const handleRoutes = (event: MouseEvent) => {
 		if (href) {
 			window.history.pushState({}, "", href);
 			handleLocation();
+
+			links.forEach((link) => {
+				link.classList.remove("active");
+				if (link.getAttribute("href") === href) {
+					link.classList.add("active");
+				}
+			});
 		}
 	} else {
 		console.error("Target Not Found!");
@@ -66,10 +75,28 @@ export const handleLocation = async () => {
 };
 
 export const setupLinkListeners = () => {
-	const links = document.querySelectorAll(".route-link");
 	if (links.length === 0) {
 		console.warn("Link Not Found!");
 	}
+
+	const removeActiveClass = () => {
+		links.forEach((link) => {
+			link.classList.remove("active");
+		});
+	};
+
+	const setActiveLink = () => {
+		const currentPath = window.location.pathname;
+		links.forEach((link) => {
+			const href = link.getAttribute("href");
+			if (href === currentPath) {
+				link.classList.add("active");
+			}
+		});
+	};
+
+	setActiveLink();
+
 	links.forEach((link) => {
 		link.removeEventListener("click", (event) =>
 			handleRoutes(event as MouseEvent)
@@ -77,5 +104,8 @@ export const setupLinkListeners = () => {
 		link.addEventListener("click", (event) =>
 			handleRoutes(event as MouseEvent)
 		);
+
+		removeActiveClass();
+		setActiveLink();
 	});
 };

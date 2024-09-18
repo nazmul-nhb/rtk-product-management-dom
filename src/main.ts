@@ -17,14 +17,13 @@ export const displayLoading = (isLoading: boolean) => {
 	const loadingIndicator = document.getElementById("loading");
 	if (loadingIndicator) {
 		loadingIndicator.className = isLoading
-			? "w-full flex items-center justify-center min-h-[80vh]"
+			? "w-full flex items-center justify-center min-h-[75vh]"
 			: "hidden";
 	}
 };
 
 export const displayAllProducts = async () => {
 	try {
-		// Display the loading spinner immediately
 		displayLoading(true);
 
 		// Fetch products data
@@ -107,10 +106,9 @@ export const displayAllProducts = async () => {
 	} catch (error) {
 		console.error(error);
 	} finally {
-		// Keep the loading spinner visible for at least 5 seconds
 		setTimeout(() => {
 			displayLoading(false);
-		}, 5000);
+		}, 3000);
 	}
 };
 

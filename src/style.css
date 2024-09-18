@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* style active navbar links/routes */
+.active {
+	font-weight: bold;
+	color: white;
+	text-decoration: none;
+	border-bottom: 1px solid white;
+    padding-bottom: 2px;
+}
